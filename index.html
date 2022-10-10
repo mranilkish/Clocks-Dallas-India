@@ -390,8 +390,11 @@ drawClock();
 setInterval(function(){
 	updateData();
 	moveHands();
+
 	updateData2();
 	moveHands2();
+
+	document.getElementById('ctim').innerHTML=new Date();
 	
 }, 1000);
 
@@ -417,7 +420,9 @@ India Abs Sunset:<b id="iset"></b>
 	</p><p>
 	India Sunrise:<b id="irise1"></b>
 	India Sunset:<b id="iset1"></b>
+	<br /><br />Your Time:<b id="ctim"></b>
 	</p> 
+
 	<script>
 
 var times = SunCalc.getTimes(new Date(), 32.7, -96.7);
