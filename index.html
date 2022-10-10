@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+
+body {
+  background: #fff;
+}
+
+svg{
+	stroke: #000;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+}
+
+#rim {
+  fill: none;
+  stroke: #999;
+  stroke-width: 2px;
+}
+
+.second-hand{
+	stroke-width:2;
+
+}
+
+.minute-hand{
+	stroke-width:4;
+	stroke-linecap:round;
+}
+
+.hour-hand{
+	stroke-width:5;
+	stroke-linecap:round;
+}
+
+.hands-cover{
+	stroke-width:2;
+	fill:#fff;
+}
+
+.second-tick{
+	stroke-width:2;
+	fill:#000;	
+}
+
+.hour-tick{
+	stroke-width:4; //same as the miute hand
+}
+
+.second-label{
+	font-size: 8px;
+}
+
+.hour-label{
+	font-size: 11px;
+}
+
+
+</style>
+</head><body>
+	<script src="./files/d3.v3.min.js"></script>
+	<script src="./files/luxon.min.js"></script>
+	<script src="./files/suncalc.js"></script>
+	
+<span style="color:red" id="usa"></span>&nbsp;
+<span style="color:blue" id="in"></span>
+<script>
+
+var radians = 0.0174532925, 
+	clockRadius = 110,
+	margin = 50,
+	width = (clockRadius+margin+600)*2,
+    height = (clockRadius+margin)*2,
+    hourHandLength = 2*clockRadius/3-30,
+    minuteHandLength = clockRadius-20,
+    secondHandLength = clockRadius-13,
+    secondHandBalance = 30,
+    secondTickStart = clockRadius;
+    secondTickLength = -10,
+    hourTickStart = clockRadius,
+    hourTickLength = -18
+    secondLabelRadius = clockRadius + 16;
+    secondLabelYOffset = 5
+    hourLabelRadius = clockRadius - 40
+    hourLabelYOffset = 7;
+
+
+var hourScale = d3.scale.linear()
+	.range([0,330])
+	.domain([0,11]);
+
+var minuteScale = secondScale = d3.scale.linear()
+	.range([0,354])
+	.domain([0,59]);
+
+var handData = [
+	{
+		type:'hour',
+		value:0,
+		length:-hourHandLength,
+		scale:hourScale
+	},
+	{
+		type:'minute',
+		value:0,
+		length:-minuteHandLength,
+		scale:minuteScale
+	},
+	{
+		type:'second',
+		value:0,
+		length:-secondHandLength,
+		scale:secondScale,
+		balance:secondHandBalance
+	}
+];
+
+
+var handData2 = [
+	{
+		type:'hour',
+		value:0,
+		length:-hourHandLength,
+		scale:hourScale
+	},
+	{
+		type:'minute',
+		value:0,
+		length:-minuteHandLength,
+		scale:minuteScale
+	},
+	{
+		type:'second',
+		value:0,
+		length:-secondHandLength,
+		scale:secondScale,
+		balance:secondHandBalance
+	}
+];
+
+function drawClock(){ //create all the clock elements
+	updateData();	//draw them in the correct starting position
+	var svg = d3.select("body").append("svg")
+	    .attr("width", width)
+	    .attr("height", height);
+
+
+
+	var face = svg.append('g')
+		.attr('id','clock-face')
+		.attr('transform','translate(' + (clockRadius + margin) + ',' + (clockRadius + margin) + ')');
+
+		
+
+	var face2 = svg.append('g')
+		.attr('id','clock-face2')
+		.attr('transform','translate(' + (clockRadius + margin+600) + ',' + (clockRadius + margin) + ')');
+	//add marks for seconds
+	face.selectAll('.second-tick')
+		.data(d3.range(0,60)).enter()
+			.append('line')
+			.attr('class', 'second-tick')
+			.attr('x1',0)
+			.attr('x2',0)
+			.attr('y1',secondTickStart)
+			.attr('y2',secondTickStart + secondTickLength)
+			.attr('transform',function(d){
+				return 'rotate(' + secondScale(d) + ')';
+			});
+	//and labels
+
+	face.selectAll('.second-label')
+		.data(d3.range(5,61,5))
+			.enter()
+			.append('text')
+			.attr('class', 'second-label')
+			.attr('text-anchor','middle')
+			.attr('x',function(d){
+				return secondLabelRadius*Math.sin(secondScale(d)*radians);
+			})
+			.attr('y',function(d){
+				return -secondLabelRadius*Math.cos(secondScale(d)*radians) + secondLabelYOffset;
+			})
+			.text(function(d){
+				return d;
+			});
+
+	//... and hours
+	face.selectAll('.hour-tick')
+		.data(d3.range(0,12)).enter()
+			.append('line')
+			.attr('class', 'hour-tick')
+			.attr('x1',0)
+			.attr('x2',0)
+			.attr('y1',hourTickStart)
+			.attr('y2',hourTickStart + hourTickLength)
+			.attr('transform',function(d){
+				return 'rotate(' + hourScale(d) + ')';
+			});
+
+	face.selectAll('.hour-label')
+		.data(d3.range(3,13,3))
+			.enter()
+			.append('text')
+			.attr('class', 'hour-label')
+			.attr('text-anchor','middle')
+			.attr('x',function(d){
+				return hourLabelRadius*Math.sin(hourScale(d)*radians);
+			})
+			.attr('y',function(d){
+				return -hourLabelRadius*Math.cos(hourScale(d)*radians) + hourLabelYOffset;
+			})
+			.text(function(d){
+				return d;
+			});
+
+
+	var hands = face.append('g').attr('id','clock-hands');
+
+	face.append('g').attr('id','face-overlay')
+		.append('circle').attr('class','hands-cover')
+			.attr('x',0)
+			.attr('y',0)
+			.attr('r',clockRadius/20);
+	face.append('text')	
+			.attr('y',150)
+			.attr('x',-20)
+			.style('fill','red')
+			.style('stroke','none')
+			.text("DALLAS")
+
+	hands.selectAll('line')
+		.data(handData)
+			.enter()
+			.append('line')
+			.attr('class', function(d){
+				return d.type + '-hand';
+			})
+			.attr('x1',0)
+			.attr('y1',function(d){
+				return d.balance ? d.balance : 0;
+			})
+			.attr('x2',0)
+			.attr('y2',function(d){
+				return d.length;
+			})
+			.attr('transform',function(d){
+				return 'rotate('+ d.scale(d.value) +')';
+			});
+
+			//2nd
+			face2.selectAll('.second-tick')
+		.data(d3.range(0,60)).enter()
+			.append('line')
+			.attr('class', 'second-tick')
+			.attr('x1',0)
+			.attr('x2',0)
+			.attr('y1',secondTickStart)
+			.attr('y2',secondTickStart + secondTickLength)
+			.attr('transform',function(d){
+				return 'rotate(' + secondScale(d) + ')';
+			});
+	//and labels
+
+	face2.selectAll('.second-label')
+		.data(d3.range(5,61,5))
+			.enter()
+			.append('text')
+			.attr('class', 'second-label')
+			.attr('text-anchor','middle')
+			.attr('x',function(d){
+				return secondLabelRadius*Math.sin(secondScale(d)*radians);
+			})
+			.attr('y',function(d){
+				return -secondLabelRadius*Math.cos(secondScale(d)*radians) + secondLabelYOffset;
+			})
+			.text(function(d){
+				return d;
+			});
+
+	//... and hours
+	face2.selectAll('.hour-tick')
+		.data(d3.range(0,12)).enter()
+			.append('line')
+			.attr('class', 'hour-tick')
+			.attr('x1',0)
+			.attr('x2',0)
+			.attr('y1',hourTickStart)
+			.attr('y2',hourTickStart + hourTickLength)
+			.attr('transform',function(d){
+				return 'rotate(' + hourScale(d) + ')';
+			});
+
+	face2.selectAll('.hour-label')
+		.data(d3.range(3,13,3))
+			.enter()
+			.append('text')
+			.attr('class', 'hour-label')
+			.attr('text-anchor','middle')
+			.attr('x',function(d){
+				return hourLabelRadius*Math.sin(hourScale(d)*radians);
+			})
+			.attr('y',function(d){
+				return -hourLabelRadius*Math.cos(hourScale(d)*radians) + hourLabelYOffset;
+			})
+			.text(function(d){
+				return d;
+			});
+
+
+	var hands2 = face2.append('g').attr('id','clock-hands2');
+
+	face2.append('g').attr('id','face-overlay')
+		.append('circle').attr('class','hands-cover')
+			.attr('x',0)
+			.attr('y',0)
+			.attr('r',clockRadius/20);
+			face.append('text')	
+			.attr('y',150)
+			.attr('x',580)
+			.style('fill','blue')
+			.style('stroke','none')
+			.text("INDIA")
+
+	hands2.selectAll('line')
+		.data(handData2)
+			.enter()
+			.append('line')
+			.attr('class', function(d){
+				return d.type + '-hand';
+			})
+			.attr('x1',0)
+			.attr('y1',function(d){
+				return d.balance ? d.balance : 0;
+			})
+			.attr('x2',0)
+			.attr('y2',function(d){
+				return d.length;
+			})
+			.attr('transform',function(d){
+				return 'rotate('+ d.scale(d.value) +')';
+			});
+}
+
+function moveHands(){
+	d3.select('#clock-hands').selectAll('line')
+	.data(handData)
+		.transition()
+		.attr('transform',function(d){
+			return 'rotate('+ d.scale(d.value) +')';
+		});
+
+
+}
+function moveHands2(){
+	d3.select('#clock-hands2').selectAll('line')
+	.data(handData2)
+		.transition()
+		.attr('transform',function(d){
+			return 'rotate('+ d.scale(d.value) +')';
+		});
+
+
+}
+
+function updateData(){
+
+	var t=new Date();
+	var DateTime = luxon.DateTime;
+	var tt=DateTime.now().setZone("America/Chicago")
+	document.getElementById("usa").innerHTML=tt.toFormat('ffff');;
+	handData[0].value = (tt.hour % 12) + tt.minute/60 ;
+	handData[1].value = tt.minute;
+	handData[2].value = tt.second;
+}
+
+
+function updateData2(){
+	var t=new Date();
+	var DateTime = luxon.DateTime;
+	var tt=DateTime.now().setZone("Asia/Kolkata")
+	document.getElementById("in").innerHTML=tt.toFormat('ffff');;
+	handData2[0].value = (tt.hour % 12) + tt.minute/60 ;
+	handData2[1].value = tt.minute;
+	handData2[2].value = tt.second;
+}
+drawClock();
+
+setInterval(function(){
+	updateData();
+	moveHands();
+	updateData2();
+	moveHands2();
+	
+}, 1000);
+
+d3.select(self.frameElement).style("height", height + "px");
+
+
+
+
+
+</script>
+<p>
+USA Abs Sunrise:<b id="urise"></b>
+USA Abs Sunset:<b id="uset"></b>
+</p>
+<p>
+India Abs Sunrise:<b id="irise"></b>
+India Abs Sunset:<b id="iset"></b>
+</p>
+<pre >                                  Local Time </pre>
+<p>
+	USA Sunrise:<b id="urise1"></b>
+	USA Sunset:<b id="uset1"></b>
+	</p><p>
+	India Sunrise:<b id="irise1"></b>
+	India Sunset:<b id="iset1"></b>
+	</p> 
+	<script>
+
+var times = SunCalc.getTimes(new Date(), 32.7, -96.7);
+var times1 = SunCalc.getTimes(new Date(), 17.9, 79.5);
+
+document.getElementById("uset1").innerHTML=times.sunset;
+document.getElementById("urise1").innerHTML=times.sunrise;
+document.getElementById("iset1").innerHTML=times1.sunset;
+document.getElementById("irise1").innerHTML=times1.sunrise;
+
+
+var t=times.sunrise;
+	var DateTime = luxon.DateTime;
+	var tt=DateTime.fromJSDate(t).setZone("America/Chicago");
+	document.getElementById("urise").innerHTML=tt.toFormat('ffff');
+	
+var t=times.sunset;
+	var DateTime = luxon.DateTime;
+	var tt=DateTime.fromJSDate(t).setZone("America/Chicago");
+	document.getElementById("uset").innerHTML=tt.toFormat('ffff');
+
+
+var t=times1.sunrise;
+	var DateTime = luxon.DateTime;
+	var tt=DateTime.fromJSDate(t).setZone("Asia/Kolkata");
+	document.getElementById("irise").innerHTML=tt.toFormat('ffff');
+
+	
+var t=times1.sunset;
+	var DateTime = luxon.DateTime;
+	var tt=DateTime.fromJSDate(t).setZone("Asia/Kolkata");
+	document.getElementById("iset").innerHTML=tt.toFormat('ffff');
+	
+	</script>
+
+</body></html>
