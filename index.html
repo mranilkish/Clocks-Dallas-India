@@ -18,17 +18,17 @@ svg{
 }
 
 .second-hand{
-	stroke-width:2;
+	stroke-width:4;
 
 }
 
 .minute-hand{
-	stroke-width:4;
+	stroke-width:5;
 	stroke-linecap:round;
 }
 
 .hour-hand{
-	stroke-width:5;
+	stroke-width:8;
 	stroke-linecap:round;
 }
 
@@ -227,7 +227,7 @@ function drawClock(){ //create all the clock elements
 			.style('fill','rgb(164, 1, 1)')
 			.style('stroke','none')
 			.text("DALLAS")
-			.style("font-size", "24px")
+			.style("font-size", "26px")
 
 	hands.selectAll('line')
 		.data(handData)
@@ -321,7 +321,7 @@ function drawClock(){ //create all the clock elements
 			.style('fill','blue')
 			.style('stroke','none')
 			.text("INDIA")
-			.style("font-size", "24px")
+			.style("font-size", "26px")
 
 	hands2.selectAll('line')
 		.data(handData2)
@@ -410,7 +410,7 @@ USA Abs Sunset:<b id="uset"></b>
 India Abs Sunrise:<b id="irise"></b>
 India Abs Sunset:<b id="iset"></b>
 </p>
-<br> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;Local Time 
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;Local Time 
 <p>
 	USA Sunrise:<b id="urise1"></b>
 	USA Sunset:<b id="uset1"></b>
