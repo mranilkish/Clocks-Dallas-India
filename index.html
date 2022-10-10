@@ -66,9 +66,9 @@ svg{
 <script>
 
 var radians = 0.0174532925, 
-	clockRadius = 110,
+	clockRadius = 130,
 	margin = 50,
-	width = (clockRadius+margin+600)*2,
+	width = (clockRadius+margin+300)*2,
     height = (clockRadius+margin)*2,
     hourHandLength = 2*clockRadius/3-30,
     minuteHandLength = clockRadius-20,
@@ -222,7 +222,7 @@ function drawClock(){ //create all the clock elements
 			.attr('y',0)
 			.attr('r',clockRadius/20);
 	face.append('text')	
-			.attr('y',150)
+			.attr('y',170)
 			.attr('x',-20)
 			.style('fill','red')
 			.style('stroke','none')
@@ -315,7 +315,7 @@ function drawClock(){ //create all the clock elements
 			.attr('y',0)
 			.attr('r',clockRadius/20);
 			face.append('text')	
-			.attr('y',150)
+			.attr('y',170)
 			.attr('x',580)
 			.style('fill','blue')
 			.style('stroke','none')
