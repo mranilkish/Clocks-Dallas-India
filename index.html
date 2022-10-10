@@ -69,7 +69,7 @@ var radians = 0.0174532925,
 	clockRadius = 130,
 	margin = 50,
 	width = (clockRadius+margin+300)*2,
-    height = (clockRadius+margin)*2,
+    height = (clockRadius+margin+10)*2,
     hourHandLength = 2*clockRadius/3-30,
     minuteHandLength = clockRadius-20,
     secondHandLength = clockRadius-13,
@@ -222,12 +222,12 @@ function drawClock(){ //create all the clock elements
 			.attr('y',0)
 			.attr('r',clockRadius/20);
 	face.append('text')	
-			.attr('y',170)
+			.attr('y',190)
 			.attr('x',-20)
 			.style('fill','rgb(164, 1, 1)')
 			.style('stroke','none')
 			.text("DALLAS")
-			.style("font-size", "14px")
+			.style("font-size", "24px")
 
 	hands.selectAll('line')
 		.data(handData)
@@ -316,12 +316,12 @@ function drawClock(){ //create all the clock elements
 			.attr('y',0)
 			.attr('r',clockRadius/20);
 			face.append('text')	
-			.attr('y',170)
+			.attr('y',190)
 			.attr('x',580)
 			.style('fill','blue')
 			.style('stroke','none')
 			.text("INDIA")
-			.style("font-size", "14px")
+			.style("font-size", "24px")
 
 	hands2.selectAll('line')
 		.data(handData2)
