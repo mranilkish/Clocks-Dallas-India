@@ -47,11 +47,11 @@ svg{
 }
 
 .second-label{
-	font-size: 15px;
+	font-size: 21px;
 }
 
 .hour-label{
-	font-size: 21px;
+	font-size: 23px;
 }
 
 
@@ -61,7 +61,7 @@ svg{
 	<script src="./files/luxon.min.js"></script>
 	<script src="./files/suncalc.js"></script>
 	
-<span style="color:red" id="usa"></span><br />
+<span style="color:rgb(164, 1, 1)" id="usa"></span><br />
 <span style="color:blue" id="in"></span>
 <script>
 
@@ -224,9 +224,10 @@ function drawClock(){ //create all the clock elements
 	face.append('text')	
 			.attr('y',170)
 			.attr('x',-20)
-			.style('fill','red')
+			.style('fill','rgb(164, 1, 1)')
 			.style('stroke','none')
 			.text("DALLAS")
+			.style("font-size", "14px")
 
 	hands.selectAll('line')
 		.data(handData)
@@ -320,6 +321,7 @@ function drawClock(){ //create all the clock elements
 			.style('fill','blue')
 			.style('stroke','none')
 			.text("INDIA")
+			.style("font-size", "14px")
 
 	hands2.selectAll('line')
 		.data(handData2)
@@ -408,7 +410,7 @@ USA Abs Sunset:<b id="uset"></b>
 India Abs Sunrise:<b id="irise"></b>
 India Abs Sunset:<b id="iset"></b>
 </p>
-<pre style="font-size:xx-large" >                                  Local Time </pre>
+<br> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;Local Time 
 <p>
 	USA Sunrise:<b id="urise1"></b>
 	USA Sunset:<b id="uset1"></b>
