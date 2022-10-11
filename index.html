@@ -9,7 +9,9 @@ table, td {
 
 body {
   background: #fff;
+  font-size:25px;
 }
+
 
 svg{
 	stroke: #000;
@@ -59,9 +61,7 @@ svg{
 	font-size: 23px;
 }
 
-body{
-	font-size:29px;
-}
+
 
 
 </style>
@@ -69,7 +69,8 @@ body{
 	<script src="./files/d3.v3.min.js"></script>
 	<script src="./files/luxon.min.js"></script>
 	<script src="./files/suncalc.js"></script>
-	
+
+	<table ><tr><td>	
 <span style="color:rgb(164, 1, 1)" id="usa"></span><br />
 <span style="color:blue" id="in"></span>
 <script>
@@ -414,6 +415,7 @@ d3.select(self.frameElement).style("height", height + "px");
 </script>
 <br />Your Time:<b id="ctim"></b>
 <p>
+</td></tr></table>
 	<table ><tr><td>
 USA Abs Sunrise:<b id="urise"></b>
 <br />USA Abs Sunset:<b id="uset"></b>
