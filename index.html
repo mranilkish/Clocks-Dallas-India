@@ -415,8 +415,12 @@ USA Abs Sunrise:<b id="urise"></b>
 <p>
 India Abs Sunrise:<b id="irise"></b>
 <br />India Abs Sunset:<b id="iset"></b>
-</p>
-<input type=text value="0" id="adj" size=4 onblur="cal()"> &nbsp;  &nbsp;  &nbsp; Local Time+(<b id="jit">0</b>)
+</p><big>
+<input type=text style="font-size: 29px;" value="1" id="adj" size=3 > 
+<input type=button style="font-size: 29px;" value="+" onclick="calp()"> 
+<input type=button style="font-size: 29px;" value="-" onclick="calm()">
+<input type=button style="font-size: 29px;" value="=" onclick="cale()"></big>
+&nbsp;  &nbsp;  &nbsp; Local Time+(<b id="jit">0</b>) Days
 <p>
 	USA Sunrise:<b id="urise1"></b>
 	<br />USA Sunset:<b id="uset1"></b>
@@ -427,10 +431,38 @@ India Abs Sunrise:<b id="irise"></b>
 	</p> 
 
 	<script>
-		function cal()
+		function cale()
 		{
 		x=document.getElementById('adj').value;
+		x=parseInt(x)
+		y=parseInt(document.getElementById('jit').innerHTML);
 		document.getElementById('jit').innerHTML=x;
+		cal(x);
+		}
+
+		function calp()
+		{
+		x=document.getElementById('adj').value;
+		x=parseInt(x)
+		y=parseInt(document.getElementById('jit').innerHTML);
+		document.getElementById('jit').innerHTML=x+y;
+		cal(x+y);
+		}
+
+		function calm()
+		{
+		x=document.getElementById('adj').value;
+		x=parseInt(x)
+		y=parseInt(document.getElementById('jit').innerHTML);
+		document.getElementById('jit').innerHTML=y-x;
+		cal(y-x);
+		}
+
+
+
+		function cal(x)
+		{
+
 		var d= new Date()
 		const dat=new Date(d.getTime() + 60 * 60 * 24 * 1000*x);
 
@@ -464,9 +496,9 @@ var t=times1.sunset;
 	var DateTime = luxon.DateTime;
 	var tt=DateTime.fromJSDate(t).setZone("Asia/Kolkata");
 	document.getElementById("iset").innerHTML=tt.toFormat('ffff');
-	x=document.getElementById('adj').value=0;
+
 		}
-		cal();
+		cal(0);
 	
 	</script>
 
