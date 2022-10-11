@@ -370,7 +370,6 @@ function moveHands2(){
 
 function updateData(){
 
-	var t=new Date();
 	var DateTime = luxon.DateTime;
 	var tt=DateTime.now().setZone("America/Chicago")
 	document.getElementById("usa").innerHTML=tt.toFormat('ffff');;
@@ -381,7 +380,6 @@ function updateData(){
 
 
 function updateData2(){
-	var t=new Date();
 	var DateTime = luxon.DateTime;
 	var tt=DateTime.now().setZone("Asia/Kolkata")
 	document.getElementById("in").innerHTML=tt.toFormat('ffff');;
@@ -418,7 +416,7 @@ USA Abs Sunrise:<b id="urise"></b>
 India Abs Sunrise:<b id="irise"></b>
 <br />India Abs Sunset:<b id="iset"></b>
 </p>
-&nbsp;  &nbsp;  &nbsp;  &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;Local Time 
+<input type=text value="0" id="adj" size=4 onblur="cal()"> &nbsp;  &nbsp;  &nbsp;  &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;Local Time+(<b id="jit">0</b>)
 <p>
 	USA Sunrise:<b id="urise1"></b>
 	<br />USA Sunset:<b id="uset1"></b>
@@ -429,9 +427,15 @@ India Abs Sunrise:<b id="irise"></b>
 	</p> 
 
 	<script>
+		function cal()
+		{
+		x=document.getElementById('adj').value;
+		document.getElementById('jit').innerHTML=x;
+		var d= new Date()
+		const dat=new Date(d.getTime() + 60 * 60 * 24 * 1000*x);
 
-var times = SunCalc.getTimes(new Date(), 32.7, -96.7);
-var times1 = SunCalc.getTimes(new Date(), 17.9, 79.5);
+var times = SunCalc.getTimes(dat, 32.7, -96.7);
+var times1 = SunCalc.getTimes(dat, 17.9, 79.5);
 
 document.getElementById("uset1").innerHTML=times.sunset;
 document.getElementById("urise1").innerHTML=times.sunrise;
@@ -460,6 +464,9 @@ var t=times1.sunset;
 	var DateTime = luxon.DateTime;
 	var tt=DateTime.fromJSDate(t).setZone("Asia/Kolkata");
 	document.getElementById("iset").innerHTML=tt.toFormat('ffff');
+	x=document.getElementById('adj').value=0;
+		}
+		cal();
 	
 	</script>
 
