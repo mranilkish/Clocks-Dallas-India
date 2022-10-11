@@ -2,6 +2,11 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style>
 
+table, td {
+ 
+ border: 1px solid;
+}
+
 body {
   background: #fff;
 }
@@ -409,6 +414,7 @@ d3.select(self.frameElement).style("height", height + "px");
 </script>
 <br />Your Time:<b id="ctim"></b>
 <p>
+	<table ><tr><td>
 USA Abs Sunrise:<b id="urise"></b>
 <br />USA Abs Sunset:<b id="uset"></b>
 </p>
@@ -420,7 +426,7 @@ India Abs Sunrise:<b id="irise"></b>
 <input type=button style="font-size: 49px;width:150px" value="+" onclick="calp()"> 
 <input type=button style="font-size: 49px;width:150px" value="-" onclick="calm()">
 <input type=button style="font-size: 49px;width:100px" value="=" onclick="cale()">
-&nbsp;  &nbsp;  &nbsp; Local Time+(<b id="jit">0</b>) Days
+<br />Local Time+(<b id="jit">0</b>) Days
 <p>
 	USA Sunrise:<b id="urise1"></b>
 	<br />USA Sunset:<b id="uset1"></b>
@@ -429,6 +435,7 @@ India Abs Sunrise:<b id="irise"></b>
 	<br />India Sunset:<b id="iset1"></b>
 	
 	</p> 
+</td></tr></table>
 
 	<script>
 		function cale()
