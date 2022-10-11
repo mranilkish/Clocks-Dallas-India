@@ -172,7 +172,7 @@ function drawClock(){ //create all the clock elements
 
 	var face2 = svg.append('g')
 		.attr('id','clock-face2')
-		.attr('transform','translate(' + (clockRadius + margin+600) + ',' + (clockRadius + margin) + ')');
+		.attr('transform','translate(' + (clockRadius + margin+390) + ',' + (clockRadius + margin) + ')');
 	//add marks for seconds
 	face.selectAll('.second-tick')
 		.data(d3.range(0,60)).enter()
@@ -242,7 +242,7 @@ function drawClock(){ //create all the clock elements
 			.attr('r',clockRadius/20);
 	face.append('text')	
 			.attr('y',190)
-			.attr('x',-20)
+			.attr('x',-40)
 			.style('fill','rgb(164, 1, 1)')
 			.style('stroke','none')
 			.text("DALLAS")
@@ -336,7 +336,7 @@ function drawClock(){ //create all the clock elements
 			.attr('r',clockRadius/20);
 			face.append('text')	
 			.attr('y',190)
-			.attr('x',580)
+			.attr('x',360)
 			.style('fill','blue')
 			.style('stroke','none')
 			.text("INDIA")
