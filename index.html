@@ -4,7 +4,7 @@
 
 table, td {
  
- border: 1px solid;
+ border: groove;
 }
 
 body {
@@ -60,6 +60,15 @@ svg{
 .hour-label{
 	font-size: 23px;
 }
+
+#usc{
+	color:rgb(164, 1, 1);
+}
+
+#inc{
+	color:blue;
+}
+
 
 
 
@@ -414,37 +423,40 @@ d3.select(self.frameElement).style("height", height + "px");
 
 </script>
 <br />Your Time:<b id="ctim"></b>
-<p>
 </td></tr></table>
+
 	<table ><tr><td>
-USA Abs Sunrise:<b id="urise"></b>
-<br />USA Abs Sunnoon:<b id="unoon"></b>
-<br />USA Abs Sunset:<b id="uset"></b>
-<br />USA Abs Darknoon:<b id="udnoon"></b>
-</p>
-<p>
-India Abs Sunrise:<b id="irise"></b>
-<br />India Abs Sunnoon:<b id="inoon"></b>
-<br />India Abs Sunset:<b id="iset"></b>
-<br />India Abs Darknoon:<b id="idnoon"></b>
-</p>
+		<table id="usc"><tr><td>USA Abs Sunrise:</td><td><b id="urise"></b></td></tr>
+			<tr><td>USA Abs Sunnoon:</td><td><b id="unoon"></b></td></tr>
+			<tr><td>USA Abs Sunset:</td><td><b id="uset"></b></td></tr>
+			<tr><td>USA Abs Darknoon:</td><td><b id="udnoon"></b></td></tr>
+			</table>
+<br />
+
+			<table id="inc"><tr><td>IND Abs Sunrise:</td><td><b id="irise"></b></td></tr>
+				<tr><td>IND Abs Sunnoon:</td><td><b id="inoon"></b></td></tr>
+				<tr><td>IND Abs Sunset:</td><td><b id="iset"></b></td></tr>
+				<tr><td>IND Abs Darknoon:</td><td><b id="idnoon"></b></td></tr>
+				</table>
+
 <input type=text style="font-size: 49px;" value="1" id="adj" size=3 > 
 <input type=button style="font-size: 49px;width:150px" value="+" onclick="calp()"> 
 <input type=button style="font-size: 49px;width:150px" value="-" onclick="calm()">
 <input type=button style="font-size: 49px;width:100px" value="=" onclick="cale()">
 <br />Local Time+(<b id="jit">0</b>) Days
-<p>
-	USA Sunrise:<b id="urise1"></b>
-	<br />USA Sunnoon:<b id="unoon1"></b>
-	<br />USA Sunset:<b id="uset1"></b>
-	<br />USA Darknoon:<b id="unadir1"></b>
-	</p><p>
-	India Sunrise:<b id="irise1"></b>
-	<br />India Sunnoon:<b id="inoon1"></b>
-	<br />India Sunset:<b id="iset1"></b>
-	<br />India Darknoon:<b id="inadir1"></b>
-	
-	</p> 
+
+
+	<table ><tr><td>USA Sunrise:</td><td><b id="urise1"></b></td></tr>
+		<tr><td>USA Sunnoon:</td><td><b id="unoon1"></b></td></tr>
+		<tr><td>USA Sunset:</td><td><b id="uset1"></b></td></tr>
+		<tr><td>USA Darknoon:</td><td><b id="unadir1"></b></td></tr>
+		</table>
+
+	<table ><tr><td>IND Sunrise:</td><td><b id="irise1"></b></td></tr>
+		<tr><td>IND Sunnoon:</td><td><b id="inoon1"></b></td></tr>
+		<tr><td>IND Sunset:</td><td><b id="iset1"></b></td></tr>
+		<tr><td>IND Darknoon:</td><td><b id="inadir1"></b></td></tr>
+		</table>
 </td></tr></table>
 
 	<script>
